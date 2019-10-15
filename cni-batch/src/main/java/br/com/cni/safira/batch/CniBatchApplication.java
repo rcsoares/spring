@@ -1,4 +1,4 @@
-package br.com.cni.batch.cnibatch;
+package br.com.cni.safira.batch;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

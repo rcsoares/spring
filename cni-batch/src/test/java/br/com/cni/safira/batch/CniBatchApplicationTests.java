@@ -1,4 +1,4 @@
-package br.com.cni.batch.cnibatch;
+package br.com.cni.safira.batch;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

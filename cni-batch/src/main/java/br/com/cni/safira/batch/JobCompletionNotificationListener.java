@@ -1,4 +1,4 @@
-package br.com.cni.batch.cnibatch;
+package br.com.cni.safira.batch;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package br.com.cni.batch.cnibatch;
+package br.com.cni.safira.batch;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -12,6 +12,8 @@ import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilde
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
+import org.springframework.batch.item.file.transform.FixedLengthTokenizer;
+import org.springframework.batch.item.file.transform.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +31,16 @@ public class BatchConfiguration {
     @Autowired
     public StepBuilderFactory stepBuilderFactory;
 
+    @Bean
+    public FixedLengthTokenizer fixedLengthTokenizer() {
+        FixedLengthTokenizer tokenizer = new FixedLengthTokenizer();
+
+        tokenizer.setNames("firstName", "lastName");
+        tokenizer.setColumns(new Range(1, 4), new Range(6, 9));
+
+        return tokenizer;
+    }
+
 
     @Bean
     public FlatFileItemReader<Person> reader() {
@@ -37,9 +49,7 @@ public class BatchConfiguration {
                 .resource(new ClassPathResource("sample-data.csv"))
                 .delimited()
                 .names(new String[]{"firstName", "lastName"})
-                .fieldSetMapper(new BeanWrapperFieldSetMapper<Person>() {{
-                    setTargetType(Person.class);
-                }})
+                .fieldSetMapper(new PersonFieldSetMapper())
                 .build();
     }
 
@@ -70,7 +80,7 @@ public class BatchConfiguration {
     @Bean
     public Step step1(JdbcBatchItemWriter<Person> writer) {
         return stepBuilderFactory.get("step1")
-                .<Person, Person> chunk(10)
+                .<Person, Person>chunk(10)
                 .reader(reader())
                 .processor(processor())
                 .writer(writer)

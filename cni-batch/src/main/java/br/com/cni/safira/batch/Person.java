@@ -1,4 +1,4 @@
-package br.com.cni.batch.cnibatch;
+package br.com.cni.safira.batch;
 
 public class Person {
 
