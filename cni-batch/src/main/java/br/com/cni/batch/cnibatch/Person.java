@@ -1,3 +1,5 @@
+package br.com.cni.batch.cnibatch;
+
 public class Person {
 
     private String lastName;

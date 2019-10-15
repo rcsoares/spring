@@ -1,3 +1,6 @@
+package br.com.cni.batch.cnibatch;
+
+import br.com.cni.batch.cnibatch.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
